@@ -26,6 +26,8 @@ from trove.instance import models, views
 from trove.datastore import models as datastore_models
 from trove.backup.models import Backup as backup_model
 from trove.backup import views as backup_views
+from trove.scheduledtask import models as scheduledtask_models
+from trove.scheduledtask import views as scheduledtask_views
 from trove.openstack.common import log as logging
 from trove.openstack.common.gettextutils import _
 import trove.common.apischema as apischema
@@ -150,6 +152,23 @@ class InstanceController(wsgi.Controller):
         paged = pagination.SimplePaginatedDataView(req.url, 'backups', view,
                                                    marker)
         return wsgi.Result(paged.data(), 200)
+
+    def scheduledtasks(self, req, tenant_id, id):
+        """Return all scheduled tasks for the specified instance."""
+        LOG.info(_("req : '%s'\n\n") % req)
+        LOG.info(_("Indexing scheduled tasks for instance '%s'") % id)
+
+        context = req.environ[wsgi.CONTEXT_KEY]
+        # verify ownership of the instance
+        models.load_instance_with_guest(models.DetailInstance,
+                                        context, id)
+
+        scheduledtasks = scheduledtask_models.ScheduledTasks.load(
+            instance_id=id
+        )
+
+        view = scheduledtask_views.ScheduledTasksView(scheduledtasks, req=req)
+        return wsgi.Result(view.data(), 200)
 
     def show(self, req, tenant_id, id):
         """Return a single instance."""

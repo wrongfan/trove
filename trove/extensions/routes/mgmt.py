@@ -20,6 +20,7 @@ from trove.extensions.mgmt.instances.service import MgmtInstanceController
 from trove.extensions.mgmt.host.service import HostController
 from trove.extensions.mgmt.quota.service import QuotaController
 from trove.extensions.mgmt.host.instance import service as hostservice
+from trove.extensions.mgmt.scheduledtasktype import service as typeservice
 from trove.extensions.mgmt.volume.service import StorageController
 
 
@@ -79,5 +80,14 @@ class Mgmt(extensions.ExtensionsDescriptor):
                     'collection_name': '{tenant_id}/mgmt/hosts'},
             collection_actions={'action': 'POST'})
         resources.append(host_instances)
+
+        scheduledtasktypes = extensions.ResourceExtension(
+            '{tenant_id}/mgmt/scheduledtasktypes',
+            typeservice.ScheduledTaskTypeController(),
+            deserializer=wsgi.RequestDeserializer(),
+            serializer=serializer,
+            member_actions={'enable': 'POST', 'disable': 'POST'},
+        )
+        resources.append(scheduledtasktypes)
 
         return resources

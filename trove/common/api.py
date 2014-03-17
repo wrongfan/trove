@@ -23,6 +23,7 @@ from trove.limits.service import LimitsController
 from trove.backup.service import BackupController
 from trove.versions import VersionsController
 from trove.datastore.service import DatastoreController
+from trove.scheduledtask.service import ScheduledTaskController
 
 
 class API(wsgi.Router):
@@ -37,6 +38,7 @@ class API(wsgi.Router):
         self._limits_router(mapper)
         self._backups_router(mapper)
         self._configurations_router(mapper)
+        self._scheduledtask_router(mapper)
 
     def _versions_router(self, mapper):
         versions_resource = VersionsController().create_resource()
@@ -93,6 +95,9 @@ class API(wsgi.Router):
                        controller=instance_resource,
                        action="configuration",
                        conditions={'method': ['GET']})
+        mapper.connect("/{tenant_id}/instances/{id}/scheduledtasks",
+                       controller=instance_resource,
+                       action="scheduledtasks")
 
     def _flavor_router(self, mapper):
         flavor_resource = FlavorController().create_resource()
@@ -187,6 +192,14 @@ class API(wsgi.Router):
                        controller=configuration_resource,
                        action='delete',
                        conditions={'method': ['DELETE']})
+
+    def _scheduledtask_router(self, mapper):
+        scheduledtask_resource = ScheduledTaskController().create_resource()
+        mapper.resource("scheduledtask", "/{tenant_id}/scheduledtasks",
+                        controller=scheduledtask_resource)
+        mapper.connect("/{tenant_id}/scheduledtasktypes",
+                       controller=scheduledtask_resource,
+                       action="type_index")
 
 
 def app_factory(global_conf, **local_conf):
