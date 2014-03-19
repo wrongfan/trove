@@ -81,13 +81,13 @@ class Mgmt(extensions.ExtensionsDescriptor):
             collection_actions={'action': 'POST'})
         resources.append(host_instances)
 
-        scheduledtasktypes = extensions.ResourceExtension(
-            '{tenant_id}/mgmt/scheduledtasktypes',
+        scheduled_task_types = extensions.ResourceExtension(
+            '{tenant_id}/mgmt/scheduled_task_types',
             typeservice.ScheduledTaskTypeController(),
             deserializer=wsgi.RequestDeserializer(),
             serializer=serializer,
             member_actions={'enable': 'POST', 'disable': 'POST'},
         )
-        resources.append(scheduledtasktypes)
+        resources.append(scheduled_task_types)
 
         return resources

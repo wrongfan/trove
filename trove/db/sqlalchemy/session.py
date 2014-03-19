@@ -46,7 +46,7 @@ def configure_db(options, models_mapper=None):
         from trove.guestagent import models as agent_models
         from trove.quota import models as quota_models
         from trove.backup import models as backup_models
-        from trove.scheduledtask import models as scheduledtask_models
+        from trove.scheduledtask import models as scheduled_task_models
         from trove.extensions.security_group import models as secgrp_models
         from trove.configuration import models as configurations_models
         from trove.conductor import models as conductor_models
@@ -59,7 +59,7 @@ def configure_db(options, models_mapper=None):
             agent_models,
             quota_models,
             backup_models,
-            scheduledtask_models,
+            scheduled_task_models,
             secgrp_models,
             configurations_models,
             conductor_models,

@@ -176,7 +176,7 @@ if __name__ == "__main__":
         from trove.tests.api import datastores  # noqa
         from trove.tests.api import root  # noqa
         from trove.tests.api import root_on_create  # noqa
-        from trove.tests.api import scheduledtasks  # noqa
+        from trove.tests.api import scheduled_tasks  # noqa
         from trove.tests.api import users  # noqa
         from trove.tests.api import user_access  # noqa
         from trove.tests.api.mgmt import accounts  # noqa
@@ -184,7 +184,7 @@ if __name__ == "__main__":
         from trove.tests.api.mgmt import hosts  # noqa
         from trove.tests.api.mgmt import instances as mgmt_instances  # noqa
         from trove.tests.api.mgmt import instances_actions as mgmt_actions  # noqa
-        from trove.tests.api.mgmt import scheduledtasktypes  # noqa
+        from trove.tests.api.mgmt import scheduled_task_types  # noqa
         from trove.tests.api.mgmt import storage  # noqa
         from trove.tests.api.mgmt import malformed_json  # noqa
     except Exception as e:

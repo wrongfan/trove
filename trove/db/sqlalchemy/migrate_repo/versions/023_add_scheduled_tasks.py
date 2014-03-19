@@ -27,8 +27,8 @@ from trove.db.sqlalchemy.migrate_repo.schema import Text
 
 meta = MetaData()
 
-scheduledtasks = Table(
-    'scheduledtasks',
+scheduled_tasks = Table(
+    'scheduled_tasks',
     meta,
     Column('id', String(36), primary_key=True, nullable=False),
     Column('tenant_id', String(36), nullable=False),
@@ -51,8 +51,8 @@ scheduledtasks = Table(
 )
 
 
-scheduledtasktypes = Table(
-    'scheduledtasktypes',
+scheduled_task_types = Table(
+    'scheduled_task_types',
     meta,
     Column('type', String(50), primary_key=True),
     Column('description', Text()),

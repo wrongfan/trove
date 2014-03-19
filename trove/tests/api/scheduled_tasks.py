@@ -17,7 +17,6 @@
 #
 
 
-from time import sleep
 from datetime import datetime
 from datetime import timedelta
 from proboscis import after_class
@@ -42,7 +41,7 @@ GROUP = "dbaas.api.scheduledtasks"
 
 
 @test(groups=[tests.DBAAS_API, GROUP, tests.PRE_INSTANCES])
-class ScheduledTasks(object):
+class Scheduled_Tasks(object):
     test_task = None
     test_task_type = "backup"
 
@@ -55,7 +54,8 @@ class ScheduledTasks(object):
         if VOLUME_SUPPORT:
             volume = {'size': 1}
 
-        self.instance = create_instance_blocking(self.client,
+        self.instance = create_instance_blocking(
+            self.client,
             name="Test Scheduled Task Instance",
             flavor_id=instance_info.dbaas_flavor_href,
             volume=volume,

@@ -153,7 +153,7 @@ class InstanceController(wsgi.Controller):
                                                    marker)
         return wsgi.Result(paged.data(), 200)
 
-    def scheduledtasks(self, req, tenant_id, id):
+    def scheduled_tasks(self, req, tenant_id, id):
         """Return all scheduled tasks for the specified instance."""
         LOG.info(_("req : '%s'\n\n") % req)
         LOG.info(_("Indexing scheduled tasks for instance '%s'") % id)
@@ -163,11 +163,11 @@ class InstanceController(wsgi.Controller):
         models.load_instance_with_guest(models.DetailInstance,
                                         context, id)
 
-        scheduledtasks = scheduledtask_models.ScheduledTasks.load(
+        scheduled_tasks = scheduledtask_models.ScheduledTasks.load(
             instance_id=id
         )
 
-        view = scheduledtask_views.ScheduledTasksView(scheduledtasks, req=req)
+        view = scheduledtask_views.ScheduledTasksView(scheduled_tasks, req=req)
         return wsgi.Result(view.data(), 200)
 
     def show(self, req, tenant_id, id):

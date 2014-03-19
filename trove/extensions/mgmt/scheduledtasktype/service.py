@@ -1,5 +1,3 @@
-# vim: tabstop=4 shiftwidth=4 softtabstop=4
-
 # Copyright 2011 OpenStack Foundation
 # All Rights Reserved.
 #
@@ -17,6 +15,7 @@
 
 
 from trove.common import wsgi
+from trove.common import exception
 from trove.common.auth import admin_context
 from trove.openstack.common import log as logging
 from trove.openstack.common.gettextutils import _
@@ -40,9 +39,15 @@ class ScheduledTaskTypeController(wsgi.Controller):
         LOG.info(_("Enabled scheduled task type '%(id)s' by tenant '%(ten)s'")
                  % {"id": id, "ten": tenant_id})
 
-        task_type = models.ScheduledTaskType.load(id)
+        try:
+            task_type = models.ScheduledTaskType.load(id)
+        except exception.ScheduledTaskTypeNotFount as e:
+            LOG.error(e)
+            return wsgi.Result(str(e), 404)
+
         task_type.update(enabled=True)
         view = views.ScheduledTaskTypeView(task_type, req)
+
         return wsgi.Result(view.data(), 200)
 
     @admin_context
@@ -56,7 +61,12 @@ class ScheduledTaskTypeController(wsgi.Controller):
         LOG.info(_("Disabled scheduled task type '%(id)s' by tenant '%(ten)s'")
                  % {"id": id, "ten": tenant_id})
 
-        task_type = models.ScheduledTaskType.load(id)
+        try:
+            task_type = models.ScheduledTaskType.load(id)
+        except exception.ScheduledTaskTypeNotFount as e:
+            LOG.error(e)
+            return wsgi.Result(str(e), 404)
+
         task_type.update(enabled=False)
         view = views.ScheduledTaskTypeView(task_type, req)
         return wsgi.Result(view.data(), 200)

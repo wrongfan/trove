@@ -36,8 +36,8 @@ valid_frequencies = [
 
 def persisted_models():
     return {
-        'scheduledtasks': DBScheduledTask,
-        'scheduledtasktypes': DBScheduledTaskType,
+        'scheduled_tasks': DBScheduledTask,
+        'scheduled_task_types': DBScheduledTaskType,
     }
 
 

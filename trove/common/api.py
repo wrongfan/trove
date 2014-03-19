@@ -95,9 +95,9 @@ class API(wsgi.Router):
                        controller=instance_resource,
                        action="configuration",
                        conditions={'method': ['GET']})
-        mapper.connect("/{tenant_id}/instances/{id}/scheduledtasks",
+        mapper.connect("/{tenant_id}/instances/{id}/scheduled_tasks",
                        controller=instance_resource,
-                       action="scheduledtasks")
+                       action="scheduled_tasks")
 
     def _flavor_router(self, mapper):
         flavor_resource = FlavorController().create_resource()
@@ -195,9 +195,9 @@ class API(wsgi.Router):
 
     def _scheduledtask_router(self, mapper):
         scheduledtask_resource = ScheduledTaskController().create_resource()
-        mapper.resource("scheduledtask", "/{tenant_id}/scheduledtasks",
+        mapper.resource("scheduledtask", "/{tenant_id}/scheduled_tasks",
                         controller=scheduledtask_resource)
-        mapper.connect("/{tenant_id}/scheduledtasktypes",
+        mapper.connect("/{tenant_id}/scheduled_task_types",
                        controller=scheduledtask_resource,
                        action="type_index")
 

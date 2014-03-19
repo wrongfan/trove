@@ -23,82 +23,82 @@ DT_FMT = '%Y-%m-%dT%H:%M:%S.%fZ'
 
 class ScheduledTaskView(object):
 
-    def __init__(self, scheduledtask, req=None):
-        self.scheduledtask = scheduledtask
+    def __init__(self, scheduled_task, req=None):
+        self.scheduled_task = scheduled_task
         self.req = req
 
     def data(self):
         task_view = {
-            "id": self.scheduledtask.id,
-            "tenant_id": self.scheduledtask.tenant_id,
-            "instance_id": self.scheduledtask.instance_id,
-            "type": self.scheduledtask.type,
-            "enabled": self.scheduledtask.enabled,
-            "name": self.scheduledtask.name,
-            "frequency": self.scheduledtask.frequency,
-            "window_start": self.scheduledtask.window_start.strftime(DT_FMT),
-            "window_end": self.scheduledtask.window_end.strftime(DT_FMT),
-            "description": self.scheduledtask.description,
+            "id": self.scheduled_task.id,
+            "tenant_id": self.scheduled_task.tenant_id,
+            "instance_id": self.scheduled_task.instance_id,
+            "type": self.scheduled_task.type,
+            "enabled": self.scheduled_task.enabled,
+            "name": self.scheduled_task.name,
+            "frequency": self.scheduled_task.frequency,
+            "window_start": self.scheduled_task.window_start.strftime(DT_FMT),
+            "window_end": self.scheduled_task.window_end.strftime(DT_FMT),
+            "description": self.scheduled_task.description,
             "metadata": {},
             "links": self._build_links(),
         }
 
-        if self.scheduledtask.metadata:
-            task_view['metadata'] = json.loads(self.scheduledtask.metadata)
+        if self.scheduled_task.metadata:
+            task_view['metadata'] = json.loads(self.scheduled_task.metadata)
 
-        return {"scheduledtask": task_view}
+        return {"scheduled_task": task_view}
 
     def _build_links(self):
-        return create_links("scheduledtasks", self.req,
-                            self.scheduledtask.id)
+        return create_links("scheduled_tasks", self.req,
+                            self.scheduled_task.id)
 
 
 class ScheduledTasksView(object):
 
-    def __init__(self, scheduledtasks, req=None):
-        self.scheduledtasks = scheduledtasks
+    def __init__(self, scheduled_tasks, req=None):
+        self.scheduled_tasks = scheduled_tasks
         self.req = req
 
     def data(self):
         data = []
-        for scheduledtask in self.scheduledtasks:
-            task_view = ScheduledTaskView(scheduledtask, req=self.req)
-            task_data = task_view.data()['scheduledtask']
+        for scheduled_task in self.scheduled_tasks:
+            task_view = ScheduledTaskView(scheduled_task, req=self.req)
+            task_data = task_view.data()['scheduled_task']
             data.append(task_data)
-        return {'scheduledtasks': data}
+        return {'scheduled_tasks': data}
 
 
 class ScheduledTaskTypeView(object):
 
-    def __init__(self, scheduledtasktype, req=None):
-        self.scheduledtasktype = scheduledtasktype
+    def __init__(self, scheduled_task_type, req=None):
+        self.scheduled_task_type = scheduled_task_type
         self.req = req
 
     def data(self):
         type_view = {
-            "type": self.scheduledtasktype.type,
-            "description": self.scheduledtasktype.description,
-            "enabled": self.scheduledtasktype.enabled,
+            "type": self.scheduled_task_type.type,
+            "description": self.scheduled_task_type.description,
+            "enabled": self.scheduled_task_type.enabled,
             "links": self._build_links(),
         }
 
-        return {"scheduledtasktype": type_view}
+        return {"scheduled_task_type": type_view}
 
     def _build_links(self):
-        return create_links("scheduledtasktypes", self.req,
-                            self.scheduledtasktype.type)
+        return create_links("scheduled_task_types", self.req,
+                            self.scheduled_task_type.type)
 
 
 class ScheduledTaskTypesView(object):
 
-    def __init__(self, scheduledtasktypes, req=None):
-        self.scheduledtasktypes = scheduledtasktypes
+    def __init__(self, scheduled_task_types, req=None):
+        self.scheduled_task_types = scheduled_task_types
         self.req = req
 
     def data(self):
         data = []
-        for scheduledtasktype in self.scheduledtasktypes:
-            type_view = ScheduledTaskTypeView(scheduledtasktype, req=self.req)
-            type_data = type_view.data()['scheduledtasktype']
+        for scheduled_task_type in self.scheduledtasktypes:
+            type_view = ScheduledTaskTypeView(scheduled_task_type, req=self.req)
+            type_data = type_view.data()['scheduled_task_type']
             data.append(type_data)
-        return {'scheduledtasktypes': data}
+        return {'scheduled_task_types': data}

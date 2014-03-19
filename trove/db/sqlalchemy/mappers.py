@@ -59,9 +59,9 @@ def map(engine, models):
                Table('configuration_parameters', meta, autoload=True))
     orm.mapper(models['conductor_lastseen'],
                Table('conductor_lastseen', meta, autoload=True))
-    orm.mapper(models['scheduledtasks'], Table('scheduledtasks', meta,
+    orm.mapper(models['scheduled_tasks'], Table('scheduled_tasks', meta,
                                                autoload=True))
-    orm.mapper(models['scheduledtasktypes'], Table('scheduledtasktypes',
+    orm.mapper(models['scheduled_task_types'], Table('scheduled_task_types',
                                                    meta, autoload=True))
 
 

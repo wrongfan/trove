@@ -1,5 +1,3 @@
-# vim: tabstop=4 shiftwidth=4 softtabstop=4
-
 # Copyright (c) 2011 OpenStack Foundation
 # All Rights Reserved.
 #
@@ -19,6 +17,7 @@
 from trove.common.utils import poll_until
 from troveclient.compat import exceptions
 
+
 def create_instance_blocking(client, **kwargs):
     instance = client.instances.create(**kwargs)
 
@@ -27,15 +26,19 @@ def create_instance_blocking(client, **kwargs):
         if refresh.status == "ACTIVE":
             return True
         return False
+
     poll_until(verify_activation)
     return client.instances.get(instance.id)
 
+
 def destroy_instance_blocking(client, instance):
     client.instances.delete(instance.id)
+
     def verify_destruction():
         try:
             client.instances.get(instance.id)
         except exceptions.NotFound:
             return True
         return False
+
     poll_until(verify_destruction)

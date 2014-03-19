@@ -350,7 +350,7 @@ class SimpleInstance(object):
 
 
 class DetailInstance(SimpleInstance):
-    """A detailed view of an Instnace.
+    """A detailed view of an Instance.
 
     This loads a SimpleInstance and then adds additional data for the
     instance from the guest.

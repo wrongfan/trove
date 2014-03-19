@@ -278,6 +278,10 @@ class ConfigNotFound(NotFound):
     message = _("Config file not found")
 
 
+class ScheduledTaskTypeNotFount(NotFound):
+
+    message = _("Scheduled task type not found.")
+
 class PasteAppNotFound(NotFound):
 
     message = _("Paste app not found.")

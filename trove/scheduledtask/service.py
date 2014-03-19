@@ -40,7 +40,7 @@ class ScheduledTaskController(wsgi.Controller):
         LOG.info(_("req : '%s'\n\n") % req)
         LOG.info(_("body : '%s'\n\n") % body)
 
-        data = body['scheduledtask']
+        data = body['scheduled_task']
 
         # sigh, XML can't do booleans properly without a schema
         if 'enabled' in data:
@@ -54,9 +54,9 @@ class ScheduledTaskController(wsgi.Controller):
         context = req.environ[wsgi.CONTEXT_KEY]
         data['tenant_id'] = context.tenant
 
-        scheduledtask = models.ScheduledTask.create(**data)
+        scheduled_task = models.ScheduledTask.create(**data)
         return wsgi.Result(views.
-                           ScheduledTaskView(scheduledtask, req).data(), 200)
+                           ScheduledTaskView(scheduled_task, req).data(), 200)
 
     def show(self, req, tenant_id, id):
         LOG.info(_("Showing scheduled task '%(id)s' for tenant '%(tenant)s'")
@@ -64,8 +64,8 @@ class ScheduledTaskController(wsgi.Controller):
         LOG.info(_("req : '%s'\n\n") % req)
 
         context = req.environ[wsgi.CONTEXT_KEY]
-        scheduledtask = models.ScheduledTask.load(id, context=context)
-        view = views.ScheduledTaskView(scheduledtask, req)
+        scheduled_task = models.ScheduledTask.load(id, context=context)
+        view = views.ScheduledTaskView(scheduled_task, req)
         return wsgi.Result(view.data(), 200)
 
     def update(self, req, body, tenant_id, id):
@@ -74,7 +74,7 @@ class ScheduledTaskController(wsgi.Controller):
         LOG.info(_("req : '%s'\n\n") % req)
         LOG.info(_("body : '%s'\n\n") % body)
 
-        data = body['scheduledtask']
+        data = body['scheduled_task']
 
         # sigh, XML can't do booleans properly without a schema
         if 'enabled' in data:
@@ -95,9 +95,9 @@ class ScheduledTaskController(wsgi.Controller):
 
         context = req.environ[wsgi.CONTEXT_KEY]
 
-        scheduledtask = models.ScheduledTask.load(id, context=context)
-        scheduledtask.update(**data)
-        view = views.ScheduledTaskView(scheduledtask, req)
+        scheduled_task = models.ScheduledTask.load(id, context=context)
+        scheduled_task.update(**data)
+        view = views.ScheduledTaskView(scheduled_task, req)
         return wsgi.Result(view.data(), 200)
 
     def delete(self, req, tenant_id, id):
@@ -113,6 +113,6 @@ class ScheduledTaskController(wsgi.Controller):
         LOG.info(_("Listing scheduled task types for tenant '%s'") % tenant_id)
         LOG.info(_("req : '%s'\n\n") % req)
 
-        scheduledtasktypes = models.ScheduledTaskTypes.load()
-        view = views.ScheduledTaskTypesView(scheduledtasktypes, req)
+        scheduled_task_types = models.ScheduledTaskTypes.load()
+        view = views.ScheduledTaskTypesView(scheduled_task_types, req)
         return wsgi.Result(view.data(), 200)
